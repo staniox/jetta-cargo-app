@@ -73,9 +73,9 @@
 
           <b-button class="bg-dark text-light" type="submit" > Submit </b-button>
           <div>
-            <b-overlay :show="show" rounded="sm">
+            <b-overlay :show="isLoading" rounded="sm">
           <b-card class="mt-3" header="Form Data Result" v-show="show">
-            <pre class="m-0">{{ form }}</pre>
+            <pre class="m-0">{{ response}}</pre>
           </b-card>
             </b-overlay>
           </div>
@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import {app} from "../services/axios";
 export default {
   data() {
 
@@ -98,18 +99,22 @@ export default {
         box3: {label:'Box 3',amount:'15',length:'0.20',width:'0.6',height:'0.41'},
         container: {label:'Container',amount:'1',length:'2',width:'4',height:'1.5'},
       },
-      show:false
+      response:{},
+      show:false,
+      isLoading: false
     }
   },
   methods: {
     async onSubmit(event) {
-      this.show = true
+      this.show = this.isLoading = true;
       event.preventDefault()
-      const sleep = (milliseconds) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
-      }
-      await sleep(5000)
-      this.show = false
+      console.log(JSON.stringify((this.form)))
+      app.post('sort-boxes',this.form).then(res =>{
+        this.response = res.data
+        this.isLoading =false;
+      }).catch(err => {
+        console.log(err)
+      })
     },
   }
 }
