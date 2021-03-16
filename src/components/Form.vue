@@ -7,7 +7,7 @@
 
 
           <b-row v-bind:key="index" v-for="(value,name,index) in form">
-            <b-container><h5 class="display-12 bg-dark text-light">{{ value.label }}</h5></b-container>
+            <b-container><h5 class="display-12 bg-dark text-light opacity-on-hover">{{ value.label }}</h5></b-container>
             <b-col>
               <b-form-group
                   :id="'input-amount-group-'+name"
@@ -71,10 +71,10 @@
           </b-row>
           <hr class="my-4">
 
-          <b-button class="bg-dark text-light" type="submit" > Submit </b-button>
+          <b-button class="bg-dark text-light opacity-on-hover" type="submit" > Submit </b-button>
           <div>
             <b-overlay :show="isLoading" rounded="sm">
-          <b-card class="mt-3" header="Form Data Result" v-show="show">
+          <b-card class="mt-3" header="Result" v-show="show">
             <pre class="m-0">{{ response}}</pre>
           </b-card>
             </b-overlay>
@@ -120,8 +120,16 @@ export default {
 }
 </script>
 <style>
+*{
+  font-size: 9pt;
+}
 h5{
+  padding: 5px;
   text-align: center;
   border-radius: 5px;
+}
+.opacity-on-hover:hover{
+  opacity: 0.8;
+  transition: opacity 30ms;
 }
 </style>
